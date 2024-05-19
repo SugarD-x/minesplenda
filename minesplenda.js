@@ -67,11 +67,11 @@ let discordAd = new cron.CronJob('0 */18 * * * *', () => {
 });
 
 client.on('ready', async => {
-  console.log('discord');
+  console.log('The Discord connection was established successfully.');
   client.user.setPresence({
-    status: 'online',  // You can show online, idle....
+    activities: [{ name: `Minecraft, duh!`, type: ActivityType.Playing }],
+    status: 'online',
   });
-  client.user.setActivity('Minecraft, duh', { type: 'PLAYING' });
   discordAd.start();
   websiteAd.start();
 });
