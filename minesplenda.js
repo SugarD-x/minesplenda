@@ -1,6 +1,6 @@
 const { Client, Intents, MessageAttachment } = require('discord.js');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Client({ intents: 37379 });
 const config = require('./config.json');
 const cron = require('cron');
 const fs = require('fs')
@@ -40,7 +40,7 @@ var lvl_names = [
   'Server Owner'
 ];
 
-var mcchatProc = child_proc.spawn('python3', ['-u', config.mcchatpath, config.mcserver, config.mcuser, config.mcpass]);
+var mcchatProc = child_proc.spawn('python3', [], {shell: true}, ['-u', config.mcchatpath, config.mcserver, config.mcuser, config.mcpass]);
 var mccchat_send = (str) => mcchatProc.stdin.write(str + '\n');
 console.log('mcchat child');
 
@@ -76,7 +76,7 @@ client.on('ready', async => {
   websiteAd.start();
 });
 
-client.on('message', message => {
+client.on('messageCreate', message => {
   if (!message.content.startsWith(prefix) || message.author.bot || message.guild === null) return;
 
   const args = message.content.slice(prefix.length).trim().split(' ');
